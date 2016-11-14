@@ -6,10 +6,10 @@
   "visible" : true,
   "sortWeight" : "0.0",
   "repoName" : "iotapp-template-analog-read",
-  "tooltip" : "A simple node.js application intended to read data from Analog pins on the Intel based development boards such as the Intel(R) Galileo and Edison with Arduino breakout board.",
-  "description" : "A simple node.js application intended to read data from Analog pins on the Intel based development boards such as the Intel(R) Galileo and Edison with Arduino breakout board.",
+  "tooltip" : "Read data from an analog pin.",
+  "description" : "A simple Node.js application that reads an analog input, on select Intel IoT development boards, and displays the result of that read on the console log.",
   "articleUrl" : "https://software.intel.com/en-us/xdk/docs/intel-xdk-iot-edition-nodejs-templates",
-  "keywords" : [""],
+  "keywords" : ["mraa","analog i/o"],
   "targets": ["edison","galileo"],
   "runtimes": ["node"]
 }
