@@ -2,6 +2,8 @@
  * A simple Node.js application to read an analog input.
  * Supported Intel IoT development boards are identified in the code.
  *
+ * See LICENSE.md for license terms and conditions.
+ *
  * https://software.intel.com/en-us/html5/articles/intel-xdk-iot-edition-nodejs-templates
  */
 
@@ -39,8 +41,11 @@ if( !cfg.init() ) {
 // configure (initialize) our I/O pins for usage (gives us an I/O object)
 // configuration is based on parameters provided by the call to cfg.init()
 
-cfg.io = new cfg.mraa.Gpio(cfg.ioPin,cfg.ioOwner,cfg.ioRaw) ;
-cfg.io.dir(cfg.mraa.DIR_OUT) ;                  // configure the LED gpio as an output
+cfg.io = new cfg.mraa.Aio(cfg.ioPin) ;          // construct our I/O object
+cfg.io.setBit(cfg.ioBit) ;                      // set preferred read resolution
+
+console.log("Using analog input pin number: " + cfg.ioPin) ;
+console.log("Analog reads returned as " + cfg.ioBit + " bit integers.") ;
 
 
 // now we are going to read the analog input at a periodic interval

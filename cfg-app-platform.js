@@ -1,6 +1,8 @@
 /*
  * Initialization and configuration code for the 'IoT Analog Read' app.
  * Designed to allow use of this sample on a variety of platforms.
+ *
+ * See LICENSE.md for license terms and conditions.
  */
 
 // keep /*jslint and /*jshint lines for proper jshinting and jslinting
@@ -74,15 +76,17 @@ module.exports = function(options) {
  *
  * The cfg.init() function must be called to configure for a specific board.
  *
- * see mraa Gpio class, especially constructor, for details:
- * http://iotdk.intel.com/docs/master/mraa/classmraa_1_1_aio.html
+ * See mraa API documentation, especially I/O constructor, for details:
+ * http://iotdk.intel.com/docs/master/mraa/index.html
  *
  * @member {Object} for storing AIO object to be created by caller
- * @member {Object} Aio class constructor parm, mraa AIO pin #
+ * @member {Number} Aio class constructor parameter, mraa AIO pin #
+ * @member {Number} Aio preferred returned integer bit "resolution"
  */
 
     cfg.io = {} ;               // used by caller to hold mraa I/O object
     cfg.ioPin = -1 ;            // set to unknown pin (will force a fail)
+    cfg.ioBit = 16 ;            // preferred return resolution for analog i/o reads
 
 
 
@@ -120,7 +124,7 @@ module.exports = function(options) {
 
             default:
                 if( opt.skipTest && opt.altPin ) {
-                    io = opt.altPin ; 		       // force run on unknown platform with alt pin
+                    io = opt.altPin ;                   // force run on unknown platform with alt pin
                 }
                 else {
                     console.error("Unknown libmraa platform: " + cfg.mraa.getPlatformType() + " -> " + cfg.mraa.getPlatformName()) ;
@@ -217,9 +221,9 @@ module.exports = function(options) {
     cfg.identify = function() {
 
         if( opt.altPin )
-            console.log("altPin: " + opt.altPin) ;
+            console.log("Alternate I/O pin " + opt.altPin + " was used.") ;
         if( opt.skipTest )
-            console.log("skipTest: " + opt.skipTest) ;
+            console.log("Platform compatibility tests were skipped.") ;
 
         console.log("node version: " + process.versions.node) ;
         console.log("mraa version: " + cfg.mraa.getVersion()) ;
@@ -227,11 +231,11 @@ module.exports = function(options) {
         console.log("mraa platform name: " + cfg.mraa.getPlatformName()) ;
 
         var os = require('os') ;
-        console.log("os hostname: " + os.hostname()) ;
-        console.log("os platform: " + os.platform()) ;
-        console.log("os release: " + os.release()) ;
         console.log("os type: " + os.type()) ;
+        console.log("os platform: " + os.platform()) ;
         console.log("os architecture: " + os.arch()) ;
+        console.log("os release: " + os.release()) ;
+        console.log("os hostname: " + os.hostname()) ;
 //        console.log("os.cpus: ", os.cpus()) ;
 
 //        var fs = require('fs') ;
