@@ -1,24 +1,64 @@
-/*jslint node:true, vars:true, bitwise:true, unparam:true */
-/*jshint unused:true */
-
 /*
-A simple node.js application intended to read data from Analog pins on the Intel based development boards such as the Intel(R) Galileo and Edison with Arduino breakout board.
+ * A simple Node.js application to read an analog input.
+ * Supported Intel IoT development boards are identified in the code.
+ *
+ * https://software.intel.com/en-us/html5/articles/intel-xdk-iot-edition-nodejs-templates
+ */
 
-MRAA - Low Level Skeleton Library for Communication on GNU/Linux platforms
-Library in C/C++ to interface with Galileo & other Intel platforms, in a structured and sane API with port nanmes/numbering that match boards & with bindings to javascript & python.
+// keep /*jslint and /*jshint lines for proper jshinting and jslinting
+// see http://www.jslint.com/help.html and http://jshint.com/docs
+/* jslint node:true */
+/* jshint unused:true */
 
-Steps for installing MRAA & UPM Library on Intel IoT Platform with IoTDevKit Linux* image
-Using a ssh client: 
-1. echo "src maa-upm http://iotdk.intel.com/repos/1.1/intelgalactic" > /etc/opkg/intel-iotdk.conf
-2. opkg update
-3. opkg upgrade
+"use strict" ;
 
-Article: https://software.intel.com/en-us/html5/articles/intel-xdk-iot-edition-nodejs-templates
-*/
 
-var mraa = require('mraa'); //require mraa
-console.log('MRAA Version: ' + mraa.getVersion()); //write the mraa version to the console
+var APP_NAME = "IoT Analog Read" ;
+var cfg = require("./cfg-app-platform.js")() ;          // init and config I/O resources
 
-var analogPin0 = new mraa.Aio(0); //setup access analog input Analog pin #0 (A0)
-var analogValue = analogPin0.read(); //read the value of the analog pin
-console.log(analogValue); //write the value of the analog pin to the console
+console.log("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n") ;   // poor man's clear console
+console.log("Initializing " + APP_NAME) ;
+
+
+// confirm that we have a version of libmraa and Node.js that works
+// exit this app if we do not
+
+cfg.identify() ;                // prints some interesting platform details to console
+
+if( !cfg.test() ) {
+    process.exitCode = 1 ;
+    throw new Error("Call to cfg.test() failed, check console messages for details.") ;
+}
+
+if( !cfg.init() ) {
+    process.exitCode = 1 ;
+    throw new Error("Call to cfg.init() failed, check console messages for details.") ;
+}
+
+
+// configure (initialize) our I/O pins for usage (gives us an I/O object)
+// configuration is based on parameters provided by the call to cfg.init()
+
+cfg.io = new cfg.mraa.Gpio(cfg.ioPin,cfg.ioOwner,cfg.ioRaw) ;
+cfg.io.dir(cfg.mraa.DIR_OUT) ;                  // configure the LED gpio as an output
+
+
+// now we are going to read the analog input at a periodic interval
+// connect a jumper wire to the sampled analog input and touch it to
+// a +1.8V, +3.3V, +5V or GND input to change the value read by the analog input
+
+var analogIn ;
+var periodicActivity = function() {
+    analogIn = cfg.io.read() ;                      // get the current value from the analog input
+    process.stdout.write(analogIn + " ") ;          // write a stream of analog values to the console
+} ;
+var intervalID = setInterval(periodicActivity, 1000) ;  // start the periodic read
+
+
+// type process.exit(0) in debug console to see
+// the following message be emitted to the debug console
+
+process.on("exit", function(code) {
+    clearInterval(intervalID) ;
+    console.log("\nExiting " + APP_NAME + ", with code:", code) ;
+}) ;
