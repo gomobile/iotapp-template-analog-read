@@ -1,6 +1,5 @@
 /*
  * A simple Node.js application to read an analog input.
- * Supported Intel IoT development boards are identified in the code.
  *
  * Supported Intel IoT development boards are identified in the code (see the
  * cfg-app-platform.js file for details).
