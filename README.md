@@ -28,7 +28,7 @@ following line of code, in the `cfg.init` method:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In the example shown above, analog "pin 0" will be used for the analog input.
-Note that on some boards the analog pin number does not correspond to the 
+Note that on some boards the analog pin number does not correspond to the
 header number, like it does for other I/O pin numbers.
 
 **IMPORTANT:** the pin that is configured by the sample is a function of the
@@ -49,20 +49,24 @@ The `cfg-app-platform.js` module has been designed so you can override the pin
 that is used, by passing it an alternate pin during the init call (see the module
 documentation). Or, you can simply modify the code to change the default value.
 
-Important Sample App Files
---------------------------
+Important App Files
+-------------------
 * main.js
 * package.json
 
-Important Sample Project Files
-------------------------------
+Important Project Files
+-----------------------
 * README.md
 * LICENSE.md
-* project-name.xdk
-* project-name.xdke
+* <project-name>.xdk
 
 Tested IoT Node.js Platforms
 ----------------------------
 * [Intel® Galileo Board](http://intel.com/galileo)
 * [Intel® Edison Development Platform](http://intel.com/edison)
 * [Intel® Joule™ 570x Developer Kit](http://intel.com/joule)
+
+This sample can run on other IoT [Node.js](http://nodejs.org) development
+platforms, that include the appropriate sensor hardware, but may require
+changes to the I/O initialization and configuration code in order to work on
+those other platforms.
