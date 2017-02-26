@@ -10,6 +10,6 @@
   "description" : "A simple Node.js application that reads an analog input, on select Intel IoT development boards, and displays the result of that read on the console log.",
   "articleUrl" : "https://software.intel.com/en-us/xdk/docs/using-templates-nodejs-iot",
   "keywords" : ["mraa","analog i/o"],
-  "targets" : ["edison","galileo"],
+  "targets" : ["edison","galileo","joule"],
   "runtimes" : ["node"]
 }
